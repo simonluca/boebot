@@ -3,7 +3,7 @@ boebot
 
 Back to high school!!
 
-This is the code I made for the final project of my high school diploma.
+I developed this code for the final project of my high school diploma.
 
 It's written in PBASIC.
 
