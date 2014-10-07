@@ -4,7 +4,7 @@
 ' Author(s): simonluca
 ' Created: 2008-06-22
 ' Version: 1.0
- 
+
 lim CON 100
 i VAR Word
 timeleft VAR Word
@@ -12,30 +12,21 @@ timeright VAR Word
 time VAR Word(2)
 irdetect VAR Bit
 cont VAR Word
- 
- 
+
 DO
- 
-  DO
-                PULSIN 9 , 1, time(0)
-                LOOP UNTIL time (0)>1000
- 
-PULSIN 9,0, time(0)
-PULSIN 9,0, time(1)
- 
+    DO
+        PULSIN 9 , 1, time(0)
+    LOOP UNTIL time (0)>1000
+    PULSIN 9,0, time(0)
+    PULSIN 9,0, time(1)
 LOOP UNTIL (time(1) < 500) AND  (time(0) < 500)
- 
- 
+
 FREQOUT 4,2000,3000
- 
- 
+
 DO
- 
     FREQOUT 8,1,60000
-          irdetect = IN9
- 
+    irdetect = IN9
     IF (irdetect = 0) THEN
- 
         PULSOUT 13,650
         PULSOUT 12,650
         FREQOUT 4,1000,3000
@@ -45,50 +36,43 @@ DO
         FREQOUT 4,1000,3000
         FREQOUT 4,500,2000
         PAUSE 5000
- 
- 
     ELSE
- 
         GOSUB test
         IF (timeleft > lim) THEN
-        DEBUG CRSRXY,0,0,"leftblack"
+            DEBUG CRSRXY,0,0,"leftblack"
         ELSE
-        DEBUG CRSRXY,0,0,"leftwhite"
+            DEBUG CRSRXY,0,0,"leftwhite"
         ENDIF
- 
         IF (timeright > lim) THEN
-        DEBUG CRSRXY,13,0,"rightblack", CR
+            DEBUG CRSRXY,13,0,"rightblack", CR
         ELSE
-        DEBUG CRSRXY,13,0,"righwhite", CR
+            DEBUG CRSRXY,13,0,"righwhite", CR
         ENDIF
- 
         IF (timeleft > lim) AND (timeright < lim)  THEN
-        PULSOUT 13,700
-        PULSOUT 12,700
+            PULSOUT 13,700
+            PULSOUT 12,700
         ELSEIF (timeleft < lim) AND (timeright > lim)  THEN
-        PULSOUT 13,800
-        PULSOUT 12,800
+            PULSOUT 13,800
+            PULSOUT 12,800
         ELSEIF (timeleft > lim) AND (timeright > lim)  THEN
-        PULSOUT 13,700
-        PULSOUT 12,700
+            PULSOUT 13,700
+            PULSOUT 12,700
         ELSE
-        PULSOUT 13,800
-        PULSOUT 12,700
+            PULSOUT 13,800
+            PULSOUT 12,700
         ENDIF
- 
     ENDIF
- 
 LOOP
  
 test:
-HIGH 0
-PAUSE 3
-HIGH 6
-PAUSE 3
-RCTIME 6,1,timeleft
-HIGH 15
-PAUSE 3
-HIGH 3
-PAUSE 3
-RCTIME 3,1,timeright
-RETURN
+    HIGH 0
+    PAUSE 3
+    HIGH 6
+    PAUSE 3
+    RCTIME 6,1,timeleft
+    HIGH 15
+    PAUSE 3
+    HIGH 3
+    PAUSE 3
+    RCTIME 3,1,timeright
+    RETURN
